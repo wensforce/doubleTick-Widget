@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script src="https://live.zwidgets.com/js-sdk/1.2/ZohoEmbededAppSDK.min.js"></script>
+</head>
+<body style="font-family: Arial, sans-serif; text-align: center; padding-top: 80px; color: #6b7280;">
+  <p>Loading...</p>
+
+  <script>
+    ZOHO.embeddedApp.on("PageLoad", function (data) {
+      const leadId = data.EntityId;
+
+      // Fetch the phone number (or any other field) for this specific lead
+      ZOHO.CRM.API.getRecord({ Entity: "Leads", RecordID: leadId }).then(function (res) {
+        const record = res.data[0];
+
+        const phone = record.Mobile || record.Phone || "";
+
+        // ---- CHANGE THIS to your actual external site URL ----
+        // const targetUrl = "https://yoursite.com/page"
+        //   + "?leadId=" + encodeURIComponent(leadId)
+        //   + "&phone=" + encodeURIComponent(phone)
+        //   + "&status=" + encodeURIComponent(leadStatus);
+        const targetUrl= "https://enterprise.doubletick.io/embed/conversations/917304607954/" + phone + "?showSidebar=false&showChatFilters=false&showCustomerDetails=false&showChatListPanel=false&embed=true"
+
+        // Redirect this same iframe to your external site, with values in the query string
+        window.location.href = targetUrl;
+      });
+    });
+
+    ZOHO.embeddedApp.init();
+  </script>
+</body>
+</html>
